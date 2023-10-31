@@ -1,5 +1,5 @@
 //Para exportar a biblioteca
-const sequelise = require('sequelize')
+const sequelize = require('sequelize')
 
 //Para fazer a conexão com o banco de dados
 const connection = new sequelize('guiaperguntas', 'root', 'root', /*Nome do banco de dados, usúario e senha */ {
