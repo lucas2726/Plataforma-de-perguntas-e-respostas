@@ -37,7 +37,7 @@ app.get("/perguntar", (req, res) => {
 app.post("/salvarpergunta", (req, res) => {
     let titulo = req.body.titulo
     let descricao = req.body.descricao
-    Pergunta.create({ //Pata conectar com a const Pergunta
+    Pergunta.create({ //Pata conectar com a const Pergunta que está conectada com o BD
         titulo: titulo, //Para conectar com o banco de dados, nesse caso: Pergunta
         descricao: descricao //Para conectar com o banco de dados, nesse caso: Pergunta
     }).then(() => {
@@ -51,8 +51,14 @@ app.get("/pergunta/:id",(req,res) => {
         where: {id: id} //A busca será do id
     }).then(pergunta => {
         if (pergunta != undefined) { //encontrada
-          res.render("pergunta", {
-            pergunta: pergunta
+          Resposta.findAll({
+            where:{perguntaId: pergunta.id},
+            order:[['id', 'DESC']]
+          }).then(respostas => {
+            res.render("pergunta", { //Para pegar no html as respostas
+                pergunta: pergunta,
+                respostas: respostas
+              })
           })
         } else { //Não encontrada
             res.redirect("/") //Para redirecionar para outra pagina, nessa caso a inicial
@@ -62,15 +68,17 @@ app.get("/pergunta/:id",(req,res) => {
 
 app.post("/responder", (req, res) => {
     let corpo = req.body.corpo//Para conectar com o html
-    let perguntaId = req.body.Pergunta//Para conectar com o html
+    let perguntaId = req.body.pergunta//Para conectar com o html
     Resposta.create({
         corpo: corpo,//Para conectar com o banco de dados, nesse caso: Resposta
         perguntaId: perguntaId //Para conectar com o banco de dados, nesse caso: Resposta
     }).then(() => {
-        res.redirect("/pergunta/"+perguntaId)//Para redirecionar para a pg pergunta + o id da pergunta
+        res.redirect("/pergunta/" + perguntaId)//Para redirecionar para a pg pergunta + o id da pergunta
     })
 })
 app.listen(8080, () => {console.log("App rodando!")})
+
+
 
 
 
