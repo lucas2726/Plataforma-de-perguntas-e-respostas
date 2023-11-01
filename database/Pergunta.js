@@ -4,7 +4,7 @@ const connection = require("./database")
 const Pergunta = connection.define('pergunta', {
     titulo:{
         type: Sequelize.STRING, //STRING é para textos curtos
-        allowNULL: false //Nunca vai ficar nulo o banco de dados
+        allowNull: false //Nunca vai ficar nulo o banco de dados
     },
     descricao:{
         type: Sequelize.TEXT, //Para textos longos
