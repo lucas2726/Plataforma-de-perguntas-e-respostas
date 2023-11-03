@@ -77,7 +77,7 @@ app.post("/responder", (req, res) => {
         res.redirect("/pergunta/" + perguntaId)//Para redirecionar para a pg pergunta + o id da pergunta
     })
 })
-app.listen(8080, () => {console.log("App rodando!")})
+app.listen(3030, () => {console.log("App rodando!")})
 
 
 
